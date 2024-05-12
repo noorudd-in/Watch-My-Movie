@@ -1,18 +1,17 @@
-"use client";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import ViewedDrawer from "./ViewedDrawer";
-import ViewedHeader from "./ViewedHeader";
+import WatchListHeader from "./WatchListHeader";
 
-type ViewedCardPropTypes = {
-  src: string;
-  type: string;
-};
+import {
+  StarIcon,
+  VideoIcon,
+  RedirectArrowIcon,
+} from "@/components/icons/Icons";
 
-const ViewedCard = ({ type }: ViewedCardPropTypes) => {
+const WatchListCard = () => {
   return (
     <>
-    <ViewedHeader />
+      <WatchListHeader />
       <div className="flex rounded shadow-md">
         <div>
           <Image
@@ -24,6 +23,7 @@ const ViewedCard = ({ type }: ViewedCardPropTypes) => {
             className="sm:w-[190px] sm:h-[280px] w-[95px] h-[140px] rounded-l"
           />
         </div>
+
         <div className="flex flex-col justify-evenly">
           <div className="ml-3 sm:text-3xl">
             <Badge>
@@ -31,18 +31,26 @@ const ViewedCard = ({ type }: ViewedCardPropTypes) => {
             </Badge>
 
             <h1 className="font-semibold">Aamdani Atthanni Kharcha Rupaiya</h1>
-            <div>
-              <span>8.4</span>
-              <span className="mx-2">&#x2022;</span>
-              <span>73%</span>
+            <div className="flex">
+              <div className="flex">
+                <StarIcon classname="sm:w-8 sm:h-8 w-4 h-4 mt-1 mr-2" />
+                <span>7.3</span>
+              </div>
+              <div className="flex ml-3">
+                <VideoIcon classname="sm:w-8 sm:h-8 w-4 h-4 mt-1 mr-2" />
+                <span>Hotstar</span>
+              </div>
             </div>
-          </div>
-          <div className="ml-3 sm:text-3xl">
-            <ViewedDrawer>
+
+            <div className="flex justify-between">
               <p className="underline underline-offset-4 cursor-pointer">
-                See more...
+                Mark as viewed
               </p>
-            </ViewedDrawer>
+              <p className="flex underline underline-offset-4 cursor-pointer">
+                View in IMDb
+                <RedirectArrowIcon classname="sm:w-8 sm:h-8 w-4 h-4 mt-1 mr-2" />
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -50,4 +58,4 @@ const ViewedCard = ({ type }: ViewedCardPropTypes) => {
   );
 };
 
-export default ViewedCard;
+export default WatchListCard;
