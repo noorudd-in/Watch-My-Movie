@@ -12,7 +12,7 @@ type ViewedCardPropTypes = {
 const ViewedCard = ({ type }: ViewedCardPropTypes) => {
   return (
     <>
-    <ViewedHeader />
+      <ViewedHeader />
       <div className="flex rounded shadow-md">
         <div>
           <Image

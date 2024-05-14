@@ -24,7 +24,7 @@ const ViewedDrawer = ({ children }: { children: React.ReactNode }) => {
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
             <DrawerTitle>Aamdani Atthanni Kharcha Rupaiya</DrawerTitle>
-            <DrawerDescription>Availabe to watch on Hotstar</DrawerDescription>
+            <DrawerDescription>Streaming on Hotstar</DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0">
             <p>

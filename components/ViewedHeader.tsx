@@ -1,11 +1,21 @@
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const ViewedHeader = () => {
+  const router = useRouter();
+
+  const redirectUser = (action: string) => {
+    sessionStorage.setItem("userAction", action);
+    router.push("/search-title");
+  };
   return (
     <>
-      <div className="my-5">
-        <Button variant="outline">Add Record</Button>
-      </div>
+      <Button
+        variant="outline"
+        className="my-5"
+        onClick={() => redirectUser("Viewed")}>
+        Add Record
+      </Button>
     </>
   );
 };

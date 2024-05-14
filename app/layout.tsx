@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ToggleTheme } from "@/components/ToggleTheme";
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Movie Memo",
@@ -22,7 +23,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange>
           <div className="flex justify-between m-5">
-            <h1 className="text-red-600 text-2xl font-bold mt-1">Movie Memo</h1>
+            <Link href='/'><h1 className="text-red-600 text-2xl font-bold mt-1">Movie Memo</h1></Link>
             <ToggleTheme />
           </div>
           {children}
