@@ -15,31 +15,134 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Link from "next/link";
 
-const ViewedDrawer = ({ children }: { children: React.ReactNode }) => {
+type customFields = {
+  id: string;
+  label: string;
+  value: string;
+};
+
+type ViewedDrawerProps = {
+  imdbID: string;
+  Title: string;
+  imdbRating: string;
+  imdbVotes: string;
+  myRating: string;
+  customFields: customFields[];
+  Released: string;
+  Genre: string;
+  Director: string;
+  Writer: string;
+  Actors: string;
+  Language: string;
+  Country: string;
+  Awards: string;
+  availableOn: string;
+};
+
+const platforms = [
+  {
+    value: "netflix",
+    label: "Netflix",
+  },
+  {
+    value: "prime-video",
+    label: "Amazon Prime",
+  },
+  {
+    value: "hotstar",
+    label: "Disney+ / Hotstar",
+  },
+  {
+    value: "sonyliv",
+    label: "Sony LIV",
+  },
+  {
+    value: "jio-cinema",
+    label: "Jio Cinema",
+  },
+  {
+    value: "lionsgate",
+    label: "Lionsgate",
+  },
+  {
+    value: "zee5",
+    label: "Zee5",
+  },
+  {
+    value: "anime",
+    label: "Anime",
+  },
+  {
+    value: "hulu",
+    label: "Hulu",
+  },
+  {
+    value: "mubi",
+    label: "MUBI",
+  },
+  {
+    value: "others",
+    label: "Others",
+  },
+  {
+    value: "unknown",
+    label: "Unknown",
+  },
+];
+
+const ViewedDrawer = ({
+  children,
+  imdbID,
+  Title,
+  imdbRating,
+  imdbVotes,
+  myRating,
+  customFields,
+  Released,
+  Genre,
+  Director,
+  Writer,
+  Actors,
+  Language,
+  Country,
+  Awards,
+  availableOn,
+}: { children: React.ReactNode } & ViewedDrawerProps) => {
   return (
     <Drawer>
       <DrawerTrigger>{children}</DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
-            <DrawerTitle>Aamdani Atthanni Kharcha Rupaiya</DrawerTitle>
-            <DrawerDescription>Streaming on Hotstar</DrawerDescription>
+            <DrawerTitle>{Title}</DrawerTitle>
+            <DrawerDescription>
+              Streaming on{" "}
+              {platforms.map((ott) => {
+                if (ott.value == availableOn) return ott.label;
+              })}
+            </DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0">
             <p>
-              <span className="font-semibold">IMDb Rating:</span> 4.8/10 (1,646
+              <span className="font-semibold">IMDb Rating:</span> {imdbRating}
+              /10 ({imdbVotes}
               votes)
             </p>
             <p>
-              <span className="font-semibold">My Rating:</span> 73%
+              <span className="font-semibold">My Rating:</span> {myRating}%
             </p>
             <div className="ml-10">
               <ul className="text-sm font-light list-disc">
-                <li>Cinematography: 10/10</li>
-                <li>Cinematography: 10/10</li>
-                <li>Cinematography: 10/10</li>
-                <li>Cinematography: 10/10</li>
+                {customFields?.map((field) => {
+                  return (
+                    <li key={field.id}>
+                      {field.label[0].toUpperCase() + field.label.slice(1)}:{" "}
+                      {field.value}/10
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 
@@ -48,40 +151,43 @@ const ViewedDrawer = ({ children }: { children: React.ReactNode }) => {
                 <AccordionTrigger>Expand</AccordionTrigger>
                 <AccordionContent>
                   <p>
-                    <span className="font-semibold">Released on:</span> 21 Dec
-                    2001
+                    <span className="font-semibold">Released on:</span>{" "}
+                    {Released}
                   </p>
                   <p>
-                    <span className="font-semibold">Language:</span> Hindi
+                    <span className="font-semibold">Language:</span> {Language}
                   </p>
                   <p>
-                    <span className="font-semibold">Genre:</span> Comedy, Drama,
-                    Family
+                    <span className="font-semibold">Genre:</span> {Genre}
                   </p>
                   <p>
-                    <span className="font-semibold">Lead Actors:</span> Govinda,
-                    Juhi Chawla, Tabu
+                    <span className="font-semibold">Lead Actors:</span> {Actors}
                   </p>
                   <p>
-                    <span className="font-semibold">Director:</span> K.
-                    Raghavendra Rao, A.S. Ravindra Babu
+                    <span className="font-semibold">Director:</span> {Director}
                   </p>
                   <p>
-                    <span className="font-semibold">Writer:</span> Anwar Khan,
-                    V. Shekhar
+                    <span className="font-semibold">Writer:</span> {Writer}
                   </p>
                   <p>
-                    <span className="font-semibold">Country:</span> India
+                    <span className="font-semibold">Country:</span> {Country}
                   </p>
                   <p>
-                    <span className="font-semibold">Awards:</span> 2 nominations
+                    <span className="font-semibold">Awards:</span> {Awards}
                   </p>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
           </div>
           <DrawerFooter>
-            <Button>View in IMDb</Button>
+            <Button>
+              <Link
+                href={`https://www.imdb.com/title/${imdbID}`}
+                target="_blank">
+                View in IMDb
+              </Link>
+            </Button>
+
             <DrawerClose asChild>
               <Button variant="outline">Cancel</Button>
             </DrawerClose>

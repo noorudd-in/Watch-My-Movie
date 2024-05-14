@@ -10,6 +10,12 @@ export type Watchlist = {
   GenreArray: string[];
 };
 
+type customFields = {
+  id: string;
+  label: string;
+  value: string;
+};
+
 export type Viewed = {
   imdbID: string;
   Title: string;
@@ -28,7 +34,7 @@ export type Viewed = {
   Awards: string;
   Poster: string;
   availableOn: string;
-  customRation: string[];
+  customRatingFields: customFields[];
 };
 
 export type State = {
@@ -38,19 +44,10 @@ export type State = {
 };
 
 export type Action = {
-  addViewed?: () => void;
+  setViewed: (data: Viewed[]) => void;
   updateViewed?: () => void;
   deleteViewed?: () => void;
   setWatchlist: (data: Watchlist[]) => void;
-  addWatchlist: (
-    imdbID: string,
-    Title: string,
-    Type: string,
-    Poster: string,
-    availableOn: string,
-    imdbRating: string,
-    GenreArray: string[]
-  ) => void;
   updateWatchlist?: () => void;
   deleteWatchlist?: () => void;
 };
@@ -60,19 +57,5 @@ export const useMovieStore = create<State & Action>()((set) => ({
   viewed: [],
   genres: [],
   setWatchlist: (data: Watchlist[]) => set({ watchlist: data }),
-  addWatchlist: (
-    imdbID: string,
-    Title: string,
-    Type: string,
-    Poster: string,
-    availableOn: string,
-    imdbRating: string,
-    GenreArray: string[]
-  ) =>
-    set((state) => ({
-      watchlist: [
-        ...state.watchlist,
-        { imdbID, Title, Type, Poster, availableOn, imdbRating, GenreArray },
-      ],
-    })),
+  setViewed: (data: Viewed[]) => set({ viewed: data }),
 }));

@@ -107,6 +107,7 @@ const SearchTitle = () => {
           return
         }
       }
+      router.push(`/add-new-watchlist?imdb=${imdb}`);
     } else if (userAction == 'Viewed') {
       for (let movie=0; movie<viewed.length; movie++) {
         if(viewed[movie].Title == title) {
@@ -114,9 +115,8 @@ const SearchTitle = () => {
           return
         }
       }
+      router.push(`/add-new-viewed?imdb=${imdb}`);
     }
-    
-    router.push(`/add-new-watchlist?imdb=${imdb}`);
   };
   return (
     <>
@@ -156,8 +156,9 @@ const SearchTitle = () => {
           <ul>
             {movieData.map((movie) => {
               return (
-                <>
+                
                   <div
+                  key={movie.imdbID}
                     className="flex rounded shadow-md my-2"
                     onClick={() => handleSelectMovie(movie.imdbID, movie.Title)}>
                     <div>
@@ -187,7 +188,7 @@ const SearchTitle = () => {
                       </p>
                     </div>
                   </div>
-                </>
+                
               );
             })}
           </ul>

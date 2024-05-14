@@ -2,21 +2,58 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import ViewedDrawer from "./ViewedDrawer";
-import ViewedHeader from "./ViewedHeader";
 
-type ViewedCardPropTypes = {
-  src: string;
-  type: string;
+type customFields = {
+  id: string;
+  label: string;
+  value: string;
 };
 
-const ViewedCard = ({ type }: ViewedCardPropTypes) => {
+type ViewedCardPropTypes = {
+  imdbID: string;
+  Title: string;
+  Type: string;
+  myRating: string;
+  imdbRating: string;
+  imdbVotes: string;
+  Released: string;
+  Genre: string;
+  Director: string;
+  Writer: string;
+  Actors: string;
+  Language: string;
+  Country: string;
+  Awards: string;
+  Poster: string;
+  availableOn: string;
+  customRatingFields: customFields[];
+};
+
+const ViewedCard = ({
+  imdbID,
+  Title,
+  Type,
+  myRating,
+  imdbRating,
+  imdbVotes,
+  Released,
+  Genre,
+  Director,
+  Writer,
+  Actors,
+  Language,
+  Country,
+  Awards,
+  Poster,
+  availableOn,
+  customRatingFields,
+}: ViewedCardPropTypes) => {
   return (
     <>
-      <ViewedHeader />
       <div className="flex rounded shadow-md">
         <div>
           <Image
-            src="https://m.media-amazon.com/images/M/MV5BMTQyNTgxODA1Ml5BMl5BanBnXkFtZTcwOTUwMDE0MQ@@._V1_SX300.jpg"
+            src={Poster}
             alt="Movie Poster"
             priority={false}
             width={500}
@@ -27,18 +64,35 @@ const ViewedCard = ({ type }: ViewedCardPropTypes) => {
         <div className="flex flex-col justify-evenly">
           <div className="ml-3 sm:text-3xl">
             <Badge>
-              <div className="sm:text-3xl">Movie</div>
+              <div className="sm:text-3xl">
+                {Type?.[0]?.toUpperCase() + Type?.slice(1)}
+              </div>
             </Badge>
 
-            <h1 className="font-semibold">Aamdani Atthanni Kharcha Rupaiya</h1>
+            <h1 className="font-semibold">{Title}</h1>
             <div>
-              <span>8.4</span>
+              <span>{imdbRating}</span>
               <span className="mx-2">&#x2022;</span>
-              <span>73%</span>
+              <span>{myRating}%</span>
             </div>
           </div>
           <div className="ml-3 sm:text-3xl">
-            <ViewedDrawer>
+            <ViewedDrawer
+              imdbID={imdbID}
+              Title={Title}
+              imdbRating={imdbRating}
+              imdbVotes={imdbVotes}
+              myRating={myRating}
+              customFields={customRatingFields}
+              Genre={Genre}
+              Released={Released}
+              Director={Director}
+              Writer={Writer}
+              Actors={Actors}
+              Language={Language}
+              Country={Country}
+              Awards={Awards}
+              availableOn={availableOn}>
               <p className="underline underline-offset-4 cursor-pointer">
                 See more...
               </p>

@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ViewedCard from "./ViewedCard";
 import WatchListCard from "./WatchListCard";
 import WatchList from "./WatchList";
+import ViewedList from "./ViewedList";
 
 export default function ChangeTabs() {
   return (
@@ -16,8 +17,8 @@ export default function ChangeTabs() {
           </TabsTrigger>
         </TabsList>
       </div>
-      <TabsContent value="watched" className="compact">
-        <ViewedCard />
+      <TabsContent value="watched">
+        <ViewedList />
       </TabsContent>
       <TabsContent value="watch-list">
         <WatchList />

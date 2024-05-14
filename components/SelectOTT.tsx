@@ -44,7 +44,7 @@ const platforms = [
   },
   {
     value: "lionsgate",
-    label: "ionsgate",
+    label: "Lionsgate",
   },
   {
     value: "zee5",

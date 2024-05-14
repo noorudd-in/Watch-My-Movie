@@ -40,6 +40,12 @@ const AddWatchlist = () => {
       toast.error("Please select the OTT platform");
       return;
     }
+    let newGenres = [...genres];
+    movieData.GenreArray.map((genre) => {
+      if (!newGenres.includes(genre)) {
+        newGenres.push(genre);
+      }
+    });
     let newWatchlist = {
       imdbID: movieData.imdbID,
       Title: movieData.Title,
@@ -53,10 +59,11 @@ const AddWatchlist = () => {
     axios.put(DB_API_URL!, {
       watchlist: [...watchlist, newWatchlist],
       viewed: viewed,
-      genres: genres
+      genres: newGenres,
     }).then( (res) => {
       setWatchlist(res.data.watchlist)
-      toast.success('Added to Watchlist!')
+      sessionStorage.setItem('toastMessage', 'Added to Watchlist!')
+      sessionStorage.setItem('toastStatus', 'success')
       router.push("/");
     })
   };

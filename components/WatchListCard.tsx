@@ -67,6 +67,7 @@ const platforms = [
     label: "Unknown",
   },
 ];
+
 const WatchListCard = ({
   Poster,
   Type,
