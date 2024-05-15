@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import SelectOTT from "@/components/SelectOTT";
 import toast, { Toaster } from "react-hot-toast";
 import { useMovieStore } from "@/store/movieStore";
+import { SpinnerIcon } from "@/components/icons/Icons";
 
 type SearchObject = {
   imdbID: string;
@@ -25,7 +26,7 @@ type SearchObject = {
 };
 
 const AddWatchlist = () => {
-  const {viewed, watchlist, genres, setWatchlist} = useMovieStore()
+  const {viewed, watchlist, genres, setWatchlist, setGenres} = useMovieStore()
   const searchParams = useSearchParams();
   const router = useRouter();
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
@@ -62,6 +63,7 @@ const AddWatchlist = () => {
       genres: newGenres,
     }).then( (res) => {
       setWatchlist(res.data.watchlist)
+      setGenres(res.data.genres)
       sessionStorage.setItem('toastMessage', 'Added to Watchlist!')
       sessionStorage.setItem('toastStatus', 'success')
       router.push("/");
@@ -71,6 +73,11 @@ const AddWatchlist = () => {
   useEffect(() => {
     if (imdbID == null || imdbID == undefined) {
       router.push("/");
+    }
+    if (genres[0] == undefined){
+      router.push('/')
+      sessionStorage.setItem('toastMessage', 'An error occured. Please try again!');
+      sessionStorage.setItem('toastStatus', 'error')
     }
     axios
       .get(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`)
@@ -92,6 +99,8 @@ const AddWatchlist = () => {
         });
       });
   }, []);
+
+  if (movieData.Title == undefined) return <SpinnerIcon />
   return (
     <>
       <Toaster />

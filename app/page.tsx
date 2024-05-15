@@ -7,7 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 
 export default function Home() {
   const DB_API_URL = process.env.NEXT_PUBLIC_DB_API_URL;
-  const { setWatchlist, setViewed } = useMovieStore();
+  const { setWatchlist, setViewed, setGenres } = useMovieStore();
 
   useEffect(() => {
     const toastStatus = sessionStorage.getItem("toastStatus");
@@ -26,6 +26,7 @@ export default function Home() {
     axios.get(DB_API_URL!).then((res) => {
       setWatchlist(res.data.watchlist);
       setViewed(res.data.viewed);
+      setGenres(res.data.genres)
     });
   }, []);
   return (

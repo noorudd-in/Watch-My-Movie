@@ -7,6 +7,7 @@ import { useMovieStore } from "@/store/movieStore";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import AlertBox from "./AlertBox";
+import EditViewedList from "./EditViewedList";
 
 type customFields = {
   id: string;
@@ -56,10 +57,6 @@ const ViewedCard = ({
   const { watchlist, viewed, genres, setViewed } = useMovieStore();
   const DB_API_URL = process.env.NEXT_PUBLIC_DB_API_URL;
 
-  const handleEdit = (id: string) => {
-    console.log(id);
-  };
-
   const handleDelete = (id: string) => {
     let newViewed = viewed.filter((movie) => movie.imdbID != id);
     axios
@@ -76,8 +73,8 @@ const ViewedCard = ({
   return (
     <>
       <Toaster />
-      <div className="flex rounded shadow-md my-2">
-        <div>
+      <div className="rounded shadow-md my-2 flex flex-row">
+        <div className="min-w-[95px] sm:min-w-[190px]">
           <Image
             src={Poster}
             alt="Movie Poster"
@@ -87,35 +84,45 @@ const ViewedCard = ({
             className="sm:w-[190px] sm:h-[280px] w-[95px] h-[140px] rounded-l"
           />
         </div>
-        <div className="flex flex-col justify-evenly w-full">
-          <div className="ml-3 sm:text-3xl">
-            <div className="flex justify-between">
+
+        <div className="ml-3 sm:text-3xl w-full">
+          <div className="grid grid-cols-2 ">
+            <div className="flex items-center">
               <Badge>
                 <div className="sm:text-3xl">
                   {Type?.[0]?.toUpperCase() + Type?.slice(1)}
                 </div>
               </Badge>
-              <div className="flex">
-                <div onClick={() => handleEdit(imdbID)}>
-                  <EditIcon classname="mt-1 sm:w-9 sm:h-9 w-8 h-8 text-blue-600 cursor-pointer" />
-                </div>
-                <AlertBox
-                  title={`Confirm Delete ${Title}?`}
-                  description={`This action cannot be undone. This will permanently delete ${Title} from Viewed List.`}
-                  handleConfirm={() => handleDelete(imdbID)}>
-                  <DeleteIcon classname="w-7 h-7 text-red-600 cursor-pointer" />
-                </AlertBox>
-              </div>
             </div>
-
-            <h1 className="font-semibold">{Title}</h1>
-            <div>
-              <span>{imdbRating}</span>
-              <span className="mx-2">&#x2022;</span>
-              <span>{myRating}%</span>
+            <div className="flex justify-end">
+              <EditViewedList
+                imdbID={imdbID}
+                Title={Title}
+                Poster={Poster}
+                imdbRating={imdbRating}
+                Type={Type}
+                availableOn={availableOn}
+                availaibleMyRating={myRating}
+                availableCustomFields={customRatingFields}
+                >
+                <EditIcon classname="mt-1 sm:w-9 sm:h-9 w-7 h-7 text-blue-600 cursor-pointer" />
+              </EditViewedList>
+              <AlertBox
+                title={`Confirm Delete ${Title}?`}
+                description={`This action cannot be undone. This will permanently delete ${Title} from Viewed List.`}
+                handleConfirm={() => handleDelete(imdbID)}>
+                <DeleteIcon classname="sm:w-7 sm:h-7 w-6 h-6 text-red-600 cursor-pointer" />
+              </AlertBox>
             </div>
           </div>
-          <div className="ml-3 sm:text-3xl">
+
+          <h1 className="font-semibold">{Title}</h1>
+          <div>
+            <span>{imdbRating}</span>
+            <span className="mx-2">&#x2022;</span>
+            <span>{myRating}%</span>
+          </div>
+          <div className="sm:text-3xl">
             <ViewedDrawer
               imdbID={imdbID}
               Title={Title}

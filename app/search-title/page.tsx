@@ -10,7 +10,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { SearchIcon, SpinnerIcon } from "@/components/icons/Icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
@@ -26,6 +26,7 @@ type SearchObject = {
 
 const SearchTitle = () => {
   const {watchlist, viewed, genres} = useMovieStore()
+  console.log(viewed, watchlist)
   const router = useRouter();
   const [movieName, setMovieName] = useState("");
   const [movieData, setMovieData] = useState<SearchObject[]>([]);
@@ -52,10 +53,8 @@ const SearchTitle = () => {
           toast.error(data.data?.Error);
           setMovieData([]);
         } else {
-          console.log(data.data);
           setMovieData(data.data.Search);
           setTotalResults(Math.ceil(parseInt(data.data.totalResults) / 10));
-          console.log(Math.ceil(parseInt(data.data.totalResults) / 10));
         }
       } else {
         toast.error("Something went wrong. Please try again");
@@ -85,10 +84,8 @@ const SearchTitle = () => {
         toast.error(data.data?.Error);
         setMovieData([]);
       } else {
-        console.log(data.data);
         setMovieData(data.data.Search);
         setTotalResults(Math.ceil(parseInt(data.data.totalResults) / 10));
-        console.log(Math.ceil(parseInt(data.data.totalResults) / 10));
         setCount(count + action);
       }
     } else {
@@ -118,13 +115,17 @@ const SearchTitle = () => {
       router.push(`/add-new-viewed?imdb=${imdb}`);
     }
   };
+
+  useEffect( () => {
+    if (genres[0] == undefined){
+      router.push('/')
+      sessionStorage.setItem('toastMessage', 'An error occured. Please try again!');
+      sessionStorage.setItem('toastStatus', 'error')
+    }
+  }, [])
   return (
     <>
       <Toaster />
-      <div className="flex justify-center mt-10">
-        <Button variant="outline">Add Custom Data</Button>
-      </div>
-      <h1 className="flex justify-center my-5">OR</h1>
       <div>
         <p className="flex justify-center mb-2">
           Quickly Search and Add Movie to {userAction} List

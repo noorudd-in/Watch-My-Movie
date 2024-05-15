@@ -45,11 +45,8 @@ export type State = {
 
 export type Action = {
   setViewed: (data: Viewed[]) => void;
-  updateViewed?: () => void;
-  deleteViewed?: () => void;
   setWatchlist: (data: Watchlist[]) => void;
-  updateWatchlist?: () => void;
-  deleteWatchlist?: () => void;
+  setGenres: (data: string[]) => void
 };
 
 export const useMovieStore = create<State & Action>()((set) => ({
@@ -58,4 +55,5 @@ export const useMovieStore = create<State & Action>()((set) => ({
   genres: [],
   setWatchlist: (data: Watchlist[]) => set({ watchlist: data }),
   setViewed: (data: Viewed[]) => set({ viewed: data }),
+  setGenres: (data: string[]) => set({genres: data})
 }));

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-
 import {
   StarIcon,
   VideoIcon,
@@ -12,6 +11,7 @@ import { useMovieStore } from "@/store/movieStore";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import AlertBox from "./AlertBox";
+import EditWatchList from "./EditWatchList";
 
 type WatchListCardProps = {
   Poster: string;
@@ -84,10 +84,6 @@ const WatchListCard = ({
   const { watchlist, viewed, genres, setWatchlist } = useMovieStore();
   const DB_API_URL = process.env.NEXT_PUBLIC_DB_API_URL;
 
-  const handleEdit = (id: string) => {
-    console.log(id);
-  };
-
   const handleDelete = (id: string) => {
     let newWatchlist = watchlist.filter((movie) => movie.imdbID != id);
     axios
@@ -105,8 +101,8 @@ const WatchListCard = ({
   return (
     <>
       <Toaster />
-      <div className="flex rounded shadow-md my-2">
-        <div>
+      <div className="flex flex-row rounded shadow-md my-2">
+        <div className="min-w-[95px] sm:min-w-[190px]">
           <Image
             src={Poster}
             alt="Movie Poster"
@@ -117,56 +113,64 @@ const WatchListCard = ({
           />
         </div>
 
-        <div className="flex flex-col justify-evenly w-full">
-          <div className="ml-3 sm:text-3xl">
-            <div className="flex justify-between">
+        <div className="ml-3 sm:text-3xl w-full">
+          <div className="grid grid-cols-2">
+            <div className="flex items-center">
               <Badge>
                 <div className="sm:text-3xl">
                   {Type?.[0]?.toUpperCase() + Type?.slice(1)}
                 </div>
               </Badge>
-              <div className="flex">
-                <div onClick={() => handleEdit(imdbID)}>
-                  <EditIcon classname="mt-1 sm:w-9 sm:h-9 w-8 h-8 text-blue-600 cursor-pointer" />
-                </div>
-                <AlertBox
-                  title={`Confirm Delete ${Title}?`}
-                  description={`This action cannot be undone. This will permanently delete ${Title} from Watch List.`}
-                  handleConfirm={() => handleDelete(imdbID)}>
-                  <DeleteIcon classname="w-7 h-7 text-red-600 cursor-pointer" />
-                </AlertBox>
-              </div>
             </div>
+            <div className="flex justify-end">
+              <div>
+                <EditWatchList
+                  imdbID={imdbID}
+                  Poster={Poster}
+                  Title={Title}
+                  Type={Type}
+                  imdbRating={imdbRating}
+                  availableOn={availableOn}>
+                  <EditIcon classname="mt-2 sm:w-9 sm:h-9 w-7 h-7 text-blue-600 cursor-pointer" />
+                </EditWatchList>
+              </div>
+              <AlertBox
+                title={`Confirm Delete ${Title}?`}
+                description={`This action cannot be undone. This will permanently delete ${Title} from Watch List.`}
+                handleConfirm={() => handleDelete(imdbID)}>
+                <DeleteIcon classname="sm:w-7 sm:h-7 w-6 h-6 text-red-600 cursor-pointer" />
+              </AlertBox>
+            </div>
+          </div>
 
-            <h1 className="font-semibold">{Title}</h1>
+          <h1 className="font-semibold">{Title}</h1>
+          <div className="flex">
             <div className="flex">
-              <div className="flex">
-                <StarIcon classname="sm:w-8 sm:h-8 w-4 h-4 mt-1 mr-2" />
-                <span>{imdbRating}</span>
-              </div>
-              <div className="flex ml-3">
-                <VideoIcon classname="sm:w-8 sm:h-8 w-4 h-4 mt-1 mr-2" />
-                <span>
-                  {platforms.map((ott) => {
-                    if (ott.value == availableOn) return ott.label;
-                  })}
-                </span>
-              </div>
+              <StarIcon classname="sm:w-8 sm:h-8 w-4 h-4 mt-1 mr-2" />
+              <span>{imdbRating}</span>
             </div>
+            <div className="flex ml-3">
+              <VideoIcon classname="sm:w-8 sm:h-8 w-4 h-4 mt-1 mr-2" />
+              <span>
+                {platforms.map((ott) => {
+                  if (ott.value == availableOn) return ott.label;
+                })}
+              </span>
+            </div>
+          </div>
 
-            <div className="flex justify-between">
-              <p className="underline underline-offset-4 cursor-pointer mr-1">
-                Mark as viewed
-              </p>
-              <p className="flex underline underline-offset-4 cursor-pointer ml-1">
-                <Link
-                  href={`https://www.imdb.com/title/${imdbID}`}
-                  target="_blank">
-                  View in IMDb
-                </Link>
-                <RedirectArrowIcon classname="sm:w-8 sm:h-8 w-4 h-4 mt-1 mr-2" />
-              </p>
-            </div>
+          <div className="flex justify-between">
+            <p className="underline underline-offset-4 cursor-pointer mr-1">
+              Mark as viewed
+            </p>
+            <p className="flex underline underline-offset-4 cursor-pointer ml-1">
+              <Link
+                href={`https://www.imdb.com/title/${imdbID}`}
+                target="_blank">
+                View in IMDb
+              </Link>
+              <RedirectArrowIcon classname="sm:w-8 sm:h-8 w-4 h-4 mt-1 mr-2" />
+            </p>
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ type SearchObject = {
 };
 
 const AddViewed = () => {
-  const { viewed, watchlist, genres, setViewed } = useMovieStore();
+  const { viewed, watchlist, genres, setViewed, setGenres } = useMovieStore();
   const searchParams = useSearchParams();
   const router = useRouter();
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
@@ -113,6 +113,7 @@ const AddViewed = () => {
       })
       .then((res) => {
         setViewed(res.data.viewed);
+        setGenres(res.data.genre)
         sessionStorage.setItem('toastMessage', 'Added to Viewed List!')
         sessionStorage.setItem('toastStatus', 'success')
         router.push("/");
@@ -122,6 +123,11 @@ const AddViewed = () => {
   useEffect(() => {
     if (imdbID == null || imdbID == undefined) {
       router.push("/");
+    }
+    if (genres[0] == undefined){
+      router.push('/')
+      sessionStorage.setItem('toastMessage', 'An error occured. Please try again!');
+      sessionStorage.setItem('toastStatus', 'error')
     }
     axios
       .get(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`)

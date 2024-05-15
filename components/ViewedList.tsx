@@ -1,12 +1,21 @@
 import { useMovieStore } from "@/store/movieStore";
 import ViewedHeader from "./ViewedHeader";
 import ViewedCard from "./ViewedCard";
+import { SpinnerIcon } from "./icons/Icons";
 
 const ViewedList = () => {
-  const { viewed } = useMovieStore();
+  const { viewed, genres } = useMovieStore();
+
+  if (genres[0] == undefined) return <SpinnerIcon />;
   return (
     <div className="compact">
       <ViewedHeader />
+      {viewed[0] == undefined && (
+        <h1 className="text-2xl flex justify-center m-5 font-bold">
+          No movies to show. Click on 'Add Record' to add movies you have viewed
+          and share with your friends.
+        </h1>
+      )}
       {viewed.map((movie) => {
         return (
           <ViewedCard
