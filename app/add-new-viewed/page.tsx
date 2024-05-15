@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import SelectOTT from "@/components/SelectOTT";
 import toast, { Toaster } from "react-hot-toast";
 import CustomFields from "@/components/CustomFields";
+import { SpinnerIcon } from "@/components/icons/Icons";
 import { v4 as uuid } from "uuid";
 
 type SearchObject = {
@@ -158,6 +159,8 @@ const AddViewed = () => {
     let result = Math.round((totalSum / totalCount) * 100);
     setMyRating(result);
   }, [customFields]);
+
+  if (movieData.Title == undefined) return <SpinnerIcon />
   return (
     <>
       <Toaster />

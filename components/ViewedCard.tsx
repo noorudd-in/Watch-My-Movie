@@ -2,6 +2,11 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import ViewedDrawer from "./ViewedDrawer";
+import { DeleteIcon, EditIcon } from "@/components/icons/Icons";
+import { useMovieStore } from "@/store/movieStore";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import AlertBox from "./AlertBox";
 
 type customFields = {
   id: string;
@@ -48,9 +53,30 @@ const ViewedCard = ({
   availableOn,
   customRatingFields,
 }: ViewedCardPropTypes) => {
+  const { watchlist, viewed, genres, setViewed } = useMovieStore();
+  const DB_API_URL = process.env.NEXT_PUBLIC_DB_API_URL;
+
+  const handleEdit = (id: string) => {
+    console.log(id);
+  };
+
+  const handleDelete = (id: string) => {
+    let newViewed = viewed.filter((movie) => movie.imdbID != id);
+    axios
+      .put(DB_API_URL!, {
+        watchlist: watchlist,
+        viewed: newViewed,
+        genres: genres,
+      })
+      .then((res) => {
+        setViewed(res.data.viewed);
+        toast.success("Movie deleted from Viewed List");
+      });
+  };
   return (
     <>
-      <div className="flex rounded shadow-md">
+      <Toaster />
+      <div className="flex rounded shadow-md my-2">
         <div>
           <Image
             src={Poster}
@@ -61,13 +87,26 @@ const ViewedCard = ({
             className="sm:w-[190px] sm:h-[280px] w-[95px] h-[140px] rounded-l"
           />
         </div>
-        <div className="flex flex-col justify-evenly">
+        <div className="flex flex-col justify-evenly w-full">
           <div className="ml-3 sm:text-3xl">
-            <Badge>
-              <div className="sm:text-3xl">
-                {Type?.[0]?.toUpperCase() + Type?.slice(1)}
+            <div className="flex justify-between">
+              <Badge>
+                <div className="sm:text-3xl">
+                  {Type?.[0]?.toUpperCase() + Type?.slice(1)}
+                </div>
+              </Badge>
+              <div className="flex">
+                <div onClick={() => handleEdit(imdbID)}>
+                  <EditIcon classname="mt-1 sm:w-9 sm:h-9 w-8 h-8 text-blue-600 cursor-pointer" />
+                </div>
+                <AlertBox
+                  title={`Confirm Delete ${Title}?`}
+                  description={`This action cannot be undone. This will permanently delete ${Title} from Viewed List.`}
+                  handleConfirm={() => handleDelete(imdbID)}>
+                  <DeleteIcon classname="w-7 h-7 text-red-600 cursor-pointer" />
+                </AlertBox>
               </div>
-            </Badge>
+            </div>
 
             <h1 className="font-semibold">{Title}</h1>
             <div>
