@@ -10,7 +10,7 @@ export type Watchlist = {
   GenreArray: string[];
 };
 
-type customFields = {
+export type customFields = {
   id: string;
   label: string;
   value: string;

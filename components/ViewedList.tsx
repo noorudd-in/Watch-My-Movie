@@ -1,22 +1,40 @@
+import { useEffect, useState } from "react";
 import { useMovieStore } from "@/store/movieStore";
 import ViewedHeader from "./ViewedHeader";
 import ViewedCard from "./ViewedCard";
 import { SpinnerIcon } from "./icons/Icons";
+import SortMovies from "./SortMovies";
+import FilterMovies from "./FilterMovies";
 
 const ViewedList = () => {
   const { viewed, genres } = useMovieStore();
+  const [movieData, setMovieData] = useState(viewed)
 
-  if (genres[0] == undefined) return <SpinnerIcon />;
+  useEffect( () => {
+    setMovieData(viewed)
+  }, [viewed])
+
+  if (genres?.[0] == undefined) return <SpinnerIcon />;
+  
   return (
     <div className="compact">
       <ViewedHeader />
+      <div className="flex justify-between mb-5">
+        <SortMovies data={viewed} setData={(data) => setMovieData(data)} origin="viewed"/>
+        <FilterMovies data={viewed} setData={(data) => setMovieData(data)} />
+      </div>
       {viewed[0] == undefined && (
         <h1 className="text-2xl flex justify-center m-5 font-bold">
           No movies to show. Click on 'Add Record' to add movies you have viewed
           and share with your friends.
         </h1>
       )}
-      {viewed.map((movie) => {
+      {movieData[0] == undefined && (
+        <h1 className="text-2xl flex justify-center m-5 font-bold">
+          No Movies to show!
+        </h1>
+      )}
+      {movieData.map((movie) => {
         return (
           <ViewedCard
             key={movie.imdbID}

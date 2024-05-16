@@ -32,14 +32,20 @@ type SearchObject = {
   Awards: string;
 };
 
+type WatchListObject = {
+  Poster: string;
+  Title: string;
+  Type: string;
+  imdbRating: string;
+  imdbID: string;
+  availableOn: string;
+  GenreArray: string[]
+}
+
 const AddViewed = () => {
-  const { viewed, watchlist, genres, setViewed, setGenres } = useMovieStore();
+  const { viewed, watchlist, genres, setWatchlist, setViewed, setGenres } = useMovieStore();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-  const imdbID = searchParams.get("imdb");
-  const DB_API_URL = process.env.NEXT_PUBLIC_DB_API_URL;
-  const userAction = sessionStorage.getItem("userAction");
   const [movieData, setMovieData] = useState({} as SearchObject);
   const [ott, setOtt] = useState("");
   const [customFields, setCustomFields] = useState([
@@ -65,6 +71,12 @@ const AddViewed = () => {
     },
   ]);
   const [myRating, setMyRating] = useState(0);
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+  const imdbID = searchParams.get("imdb");
+  const DB_API_URL = process.env.NEXT_PUBLIC_DB_API_URL;
+  const userAction = sessionStorage.getItem("userAction");
+  const ottPlatform = sessionStorage.getItem("ottPlatform");
+  const origin = sessionStorage.getItem("origin");
 
   const handleAddField = () => {
     let newFields = [
@@ -105,17 +117,20 @@ const AddViewed = () => {
       myRating: myRating,
       customRatingFields: customFields,
     };
+    let newWatchlist = watchlist.filter( (movie) => movie.imdbID != imdbID)
+   
     axios
       .put(DB_API_URL!, {
-        watchlist: watchlist,
+        watchlist: newWatchlist,
         viewed: [...viewed, newViewed],
         genres: newGenres,
       })
       .then((res) => {
+        setWatchlist(res.data.watchlist);
         setViewed(res.data.viewed);
-        setGenres(res.data.genre)
-        sessionStorage.setItem('toastMessage', 'Added to Viewed List!')
-        sessionStorage.setItem('toastStatus', 'success')
+        setGenres(res.data.genre);
+        sessionStorage.setItem("toastMessage", "Added to Viewed List!");
+        sessionStorage.setItem("toastStatus", "success");
         router.push("/");
       });
   };
@@ -124,10 +139,16 @@ const AddViewed = () => {
     if (imdbID == null || imdbID == undefined) {
       router.push("/");
     }
-    if (genres[0] == undefined){
-      router.push('/')
-      sessionStorage.setItem('toastMessage', 'An error occured. Please try again!');
-      sessionStorage.setItem('toastStatus', 'error')
+    if (genres?.[0] == undefined) {
+      router.push("/");
+      sessionStorage.setItem(
+        "toastMessage",
+        "An error occured. Please try again!"
+      );
+      sessionStorage.setItem("toastStatus", "error");
+    }
+    if (ottPlatform) {
+      setOtt(ottPlatform)
     }
     axios
       .get(`https://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`)
@@ -166,14 +187,18 @@ const AddViewed = () => {
     setMyRating(result);
   }, [customFields]);
 
-  if (movieData.Title == undefined) return <SpinnerIcon />
+  if (movieData.Title == undefined) return <SpinnerIcon />;
   return (
     <>
       <Toaster />
       <div className="flex mx-5 mb-5">
         <Image
-          src={movieData?.Poster}
-          alt="Movie Poster"
+          src={
+            movieData?.Poster == "N/A"
+              ? "https://m.media-amazon.com/images/"
+              : movieData?.Poster
+          }
+          alt={movieData.Poster == "N/A" ? "Not Available" : "Movie Poster"}
           priority={false}
           width={500}
           height={500}

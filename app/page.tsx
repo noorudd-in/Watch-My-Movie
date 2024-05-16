@@ -19,10 +19,8 @@ export default function Home() {
       } else {
         toast.error(toastMessage);
       }
-      sessionStorage.removeItem("toastStatus");
-      sessionStorage.removeItem("toastMessage");
     }
-    sessionStorage.removeItem("userAction");
+    sessionStorage.clear()
     axios.get(DB_API_URL!).then((res) => {
       setWatchlist(res.data.watchlist);
       setViewed(res.data.viewed);

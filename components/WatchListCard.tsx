@@ -12,6 +12,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import AlertBox from "./AlertBox";
 import EditWatchList from "./EditWatchList";
+import { useRouter } from "next/navigation";
 
 type WatchListCardProps = {
   Poster: string;
@@ -85,6 +86,7 @@ const WatchListCard = ({
 }: WatchListCardProps) => {
   const { watchlist, viewed, genres, setWatchlist } = useMovieStore();
   const DB_API_URL = process.env.NEXT_PUBLIC_DB_API_URL;
+  const router = useRouter()
 
   const handleDelete = (id: string) => {
     let newWatchlist = watchlist.filter((movie) => movie.imdbID != id);
@@ -100,9 +102,12 @@ const WatchListCard = ({
       });
   };
 
-  const handleGenre = () => {
-    console.log(Genre);
-  };
+  const handleMarkAsViewed = () => {
+    sessionStorage.setItem('ottPlatform', availableOn)
+    sessionStorage.setItem('origin', 'watchlist');
+    sessionStorage.setItem('userAction', 'Viewed')
+    router.push(`/add-new-viewed?imdb=${imdbID}`)
+  }
 
   const RenderGenre = () => {
     const genreOne = Genre[0];
@@ -128,8 +133,10 @@ const WatchListCard = ({
       <div className="flex flex-row rounded shadow-md my-2">
         <div className="min-w-[95px] sm:min-w-[190px]">
           <Image
-            src={Poster}
-            alt="Movie Poster"
+            src={
+              Poster == "N/A" ? "https://m.media-amazon.com/images/" : Poster
+            }
+            alt={Poster == "N/A" ? "Not Available" : "Movie Poster"}
             priority={false}
             width={500}
             height={500}
@@ -186,7 +193,7 @@ const WatchListCard = ({
           </div>
 
           <div className="flex justify-between">
-            <p className="underline underline-offset-4 cursor-pointer mr-1">
+            <p className="underline underline-offset-4 cursor-pointer mr-1" onClick={handleMarkAsViewed}>
               Mark as viewed
             </p>
             <p className="flex underline underline-offset-4 cursor-pointer ml-1">

@@ -76,8 +76,10 @@ const ViewedCard = ({
       <div className="rounded shadow-md my-2 flex flex-row">
         <div className="min-w-[95px] sm:min-w-[190px]">
           <Image
-            src={Poster}
-            alt="Movie Poster"
+            src={
+              Poster == "N/A" ? "https://m.media-amazon.com/images/" : Poster
+            }
+            alt={Poster == "N/A" ? "Not Available" : "Movie Poster"}
             priority={false}
             width={500}
             height={500}
@@ -103,8 +105,7 @@ const ViewedCard = ({
                 Type={Type}
                 availableOn={availableOn}
                 availaibleMyRating={myRating}
-                availableCustomFields={customRatingFields}
-                >
+                availableCustomFields={customRatingFields}>
                 <EditIcon classname="mt-1 sm:w-9 sm:h-9 w-7 h-7 text-blue-600 cursor-pointer" />
               </EditViewedList>
               <AlertBox

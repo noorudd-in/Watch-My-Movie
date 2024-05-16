@@ -26,7 +26,6 @@ export default function RootLayout({
           <div className="flex justify-between m-5">
             <div>
             <Link href='/'><h1 className="text-red-600 text-2xl font-bold mt-1">Movie Memo</h1></Link>
-            
             <GlobalHeader/>
             </div>
             <ToggleTheme />
