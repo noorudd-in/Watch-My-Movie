@@ -20,6 +20,7 @@ type WatchListCardProps = {
   imdbRating: string;
   availableOn: string;
   imdbID: string;
+  Genre: string[];
 };
 
 const platforms = [
@@ -80,6 +81,7 @@ const WatchListCard = ({
   imdbRating,
   availableOn,
   imdbID,
+  Genre,
 }: WatchListCardProps) => {
   const { watchlist, viewed, genres, setWatchlist } = useMovieStore();
   const DB_API_URL = process.env.NEXT_PUBLIC_DB_API_URL;
@@ -96,6 +98,28 @@ const WatchListCard = ({
         setWatchlist(res.data.watchlist);
         toast.success("Movie deleted from Watch List");
       });
+  };
+
+  const handleGenre = () => {
+    console.log(Genre);
+  };
+
+  const RenderGenre = () => {
+    const genreOne = Genre[0];
+    const genreTwo = Genre[1];
+    if (genreOne == "n/a" || genreOne == undefined) return null;
+    if (genreOne != undefined && genreTwo == undefined)
+      return (
+        <h1 className="text-sm font-light">
+          {Genre[0][0].toUpperCase() + Genre[0].slice(1)}
+        </h1>
+      );
+    return (
+      <h1 className="text-sm font-light">
+        {Genre[0][0].toUpperCase() + Genre[0].slice(1)},{" "}
+        {Genre[1][0].toUpperCase() + Genre[1].slice(1)}
+      </h1>
+    );
   };
 
   return (
@@ -123,17 +147,15 @@ const WatchListCard = ({
               </Badge>
             </div>
             <div className="flex justify-end">
-              <div>
-                <EditWatchList
-                  imdbID={imdbID}
-                  Poster={Poster}
-                  Title={Title}
-                  Type={Type}
-                  imdbRating={imdbRating}
-                  availableOn={availableOn}>
-                  <EditIcon classname="mt-2 sm:w-9 sm:h-9 w-7 h-7 text-blue-600 cursor-pointer" />
-                </EditWatchList>
-              </div>
+              <EditWatchList
+                imdbID={imdbID}
+                Poster={Poster}
+                Title={Title}
+                Type={Type}
+                imdbRating={imdbRating}
+                availableOn={availableOn}>
+                <EditIcon classname="mt-1 sm:w-9 sm:h-9 w-7 h-7 text-blue-600 cursor-pointer" />
+              </EditWatchList>
               <AlertBox
                 title={`Confirm Delete ${Title}?`}
                 description={`This action cannot be undone. This will permanently delete ${Title} from Watch List.`}
@@ -144,6 +166,10 @@ const WatchListCard = ({
           </div>
 
           <h1 className="font-semibold">{Title}</h1>
+
+          <h1>
+            <RenderGenre />
+          </h1>
           <div className="flex">
             <div className="flex">
               <StarIcon classname="sm:w-8 sm:h-8 w-4 h-4 mt-1 mr-2" />

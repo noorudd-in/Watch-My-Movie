@@ -26,6 +26,7 @@ const WatchList = () => {
             imdbRating={movie.imdbRating}
             availableOn={movie.availableOn}
             imdbID={movie.imdbID}
+            Genre={movie.GenreArray}
           />
         );
       })}

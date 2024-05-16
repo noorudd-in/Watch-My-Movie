@@ -132,8 +132,8 @@ const EditViewedList = ({
                   <SelectOTT ott={ott} setOtt={setOtt} />
                 </div>
 
-                <div className="mb-5">
-                  <Label>My Rating: {myRating}%</Label>
+                <div className="my-5">
+                  <Label className="flex justify-start">My Rating: {myRating}%</Label>
                   <CustomFields
                     customFields={customFields}
                     setCustomFields={setCustomFields}
