@@ -35,8 +35,8 @@ const SearchTitle = () => {
   const [totalResults, setTotalResults] = useState(0);
   const [count, setCount] = useState(1);
   const [movieExist, setMovieExist] = useState<MovieExistObject[]>([]);
+  const [userAction, setUserAction] = useState('')
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-  const userAction = sessionStorage.getItem("userAction");
 
   const handleSearch = async () => {
     if (movieName.length < 3) {
@@ -160,6 +160,8 @@ const SearchTitle = () => {
   };
 
   useEffect(() => {
+    let action = sessionStorage.getItem("userAction")
+    setUserAction(action!)
     if (genres[0] == undefined) {
       router.push("/");
       sessionStorage.setItem(

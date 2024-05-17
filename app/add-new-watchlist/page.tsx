@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -102,7 +102,7 @@ const AddWatchlist = () => {
 
   if (movieData.Title == undefined) return <SpinnerIcon />
   return (
-    <>
+    <Suspense fallback={<SpinnerIcon />}>
       <Toaster />
       <div className="flex mx-5 mb-5">
         <Image
@@ -151,7 +151,7 @@ const AddWatchlist = () => {
           Add to {userAction} List
         </Button>
       </div>
-    </>
+    </Suspense>
   );
 };
 
