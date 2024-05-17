@@ -4,6 +4,7 @@ import { ToggleTheme } from "@/components/ToggleTheme";
 import "./globals.css";
 import Link from "next/link";
 import GlobalHeader from "@/components/GlobalHeader";
+import DiscoverToggle from "@/components/DiscoverToggle";
 
 export const metadata: Metadata = {
   title: "Movie Memo",
@@ -25,10 +26,17 @@ export default function RootLayout({
           disableTransitionOnChange>
           <div className="flex justify-between m-5">
             <div>
-            <Link href='/'><h1 className="text-red-600 text-2xl font-bold mt-1">Movie Memo</h1></Link>
-            <GlobalHeader/>
+              <Link href="/">
+                <h1 className="text-red-600 text-2xl font-bold mt-1">
+                  Movie Memo
+                </h1>
+              </Link>
+              <GlobalHeader />
             </div>
-            <ToggleTheme />
+            <div className="flex">
+              <DiscoverToggle />
+              <ToggleTheme />
+            </div>
           </div>
           {children}
         </ThemeProvider>

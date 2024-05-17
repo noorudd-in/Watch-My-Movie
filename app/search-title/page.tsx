@@ -48,7 +48,6 @@ const SearchTitle = () => {
       const availableViewedList = viewed.map((movie) => {
         return movie.imdbID;
       });
-      console.log([availableWatchList, availableViewedList]);
       setMovieExist([availableWatchList, availableViewedList]);
       setMovieData([]);
       setTotalResults(0);
@@ -144,11 +143,21 @@ const SearchTitle = () => {
     }
   };
 
-  const CheckMovieExist = ({imdbID}: {imdbID: string}) => {
-    if (movieExist[0].includes(imdbID)) return <p className="text-sm font-light text-red-600 italic">Already added to Watch List</p>
-    if (movieExist[1].includes(imdbID)) return <p className="text-sm font-light text-red-600 italic">Already added to Viewed List</p>
-    return null
-  }
+  const CheckMovieExist = ({ imdbID }: { imdbID: string }) => {
+    if (movieExist[0].includes(imdbID))
+      return (
+        <p className="text-sm font-light text-red-600 italic">
+          Already added to Watch List
+        </p>
+      );
+    if (movieExist[1].includes(imdbID))
+      return (
+        <p className="text-sm font-light text-red-600 italic">
+          Already added to Viewed List
+        </p>
+      );
+    return null;
+  };
 
   useEffect(() => {
     if (genres[0] == undefined) {
@@ -163,7 +172,7 @@ const SearchTitle = () => {
   return (
     <>
       <Toaster />
-      <div>
+      <div className="mb-24">
         <p className="flex justify-center mb-2">
           Quickly Search and Add Movie to {userAction} List
         </p>
@@ -223,9 +232,7 @@ const SearchTitle = () => {
                     </p>
                     <CheckMovieExist imdbID={movie.imdbID} />
                   </div>
-
                 </div>
-                
               );
             })}
           </ul>

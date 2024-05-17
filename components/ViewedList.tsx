@@ -25,7 +25,7 @@ const ViewedList = () => {
       </div>
       {viewed[0] == undefined && (
         <h1 className="text-2xl flex justify-center m-5 font-bold">
-          No movies to show. Click on 'Add Record' to add movies you have viewed
+          No movies to show. Click on `&apos;Add Record&apos; to add movies you have viewed
           and share with your friends.
         </h1>
       )}

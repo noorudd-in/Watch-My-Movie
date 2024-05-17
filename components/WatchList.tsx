@@ -5,7 +5,6 @@ import WatchListHeader from "./WatchListHeader";
 import { SpinnerIcon } from "./icons/Icons";
 import SortMovies from "./SortMovies";
 import FilterMovies from "./FilterMovies";
-
 const WatchList = () => {
   const { watchlist, genres } = useMovieStore();
   const [movieData, setMovieData] = useState(watchlist);
@@ -20,7 +19,7 @@ const WatchList = () => {
       </div>
       {watchlist[0] == undefined && (
         <h1 className="text-2xl flex justify-center m-5 font-bold">
-          No movies to show. Click on 'Add New Watch List' to add movies you
+          No movies to show. Click on `&apos;Add New Watch List&apos; to add movies you
           want to watch and share with your friends.
         </h1>
       )}

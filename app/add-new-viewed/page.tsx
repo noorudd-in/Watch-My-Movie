@@ -76,7 +76,6 @@ const AddViewed = () => {
   const DB_API_URL = process.env.NEXT_PUBLIC_DB_API_URL;
   const userAction = sessionStorage.getItem("userAction");
   const ottPlatform = sessionStorage.getItem("ottPlatform");
-  const origin = sessionStorage.getItem("origin");
 
   const handleAddField = () => {
     let newFields = [

@@ -116,13 +116,13 @@ const WatchListCard = ({
     if (genreOne != undefined && genreTwo == undefined)
       return (
         <h1 className="text-sm font-light">
-          {Genre[0][0].toUpperCase() + Genre[0].slice(1)}
+          {genreOne.toUpperCase() + genreOne.slice(1)}
         </h1>
       );
     return (
       <h1 className="text-sm font-light">
-        {Genre[0][0].toUpperCase() + Genre[0].slice(1)},{" "}
-        {Genre[1][0].toUpperCase() + Genre[1].slice(1)}
+        {genreOne[0].toUpperCase() + genreOne.slice(1)},{" "}
+        {genreTwo[0].toUpperCase() + genreTwo.slice(1)}
       </h1>
     );
   };
