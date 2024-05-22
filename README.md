@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Watch My Movies
 
-## Getting Started
+A simple app to share your favourite movies with your friends and keep a track of it so you never forget the experience!
 
-First, run the development server:
+# Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The demo of this app is live and is hosted on [movies.noorudd.in](https://movies.noorudd.in).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Technologies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `NextJS`
+- `ReactJS`
+- `Tailwind CSS`
+- `TypeScript`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 📦 Libraries & Why I am using it?
 
-## Learn More
+- `Zustand: For state management`
+- `Axios: To handle API calls`
+- `React Hot Toast: To provide awesome UI notifications (like alerts)`
+- `UUID: To generate unique IDs as keys`
+- `OMDB & TMDB API: To fetch movies details and poster`
 
-To learn more about Next.js, take a look at the following resources:
+## 🚦 Running the project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To run the project in your local environment, follow the below steps:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Clone the repository to your local machine.
+2. Replace **API_URL** inside `.env` with your API URL. Alternatively, create a dummy JSON file and watch it in a local host and enter that localhost URL here.
+3. Run `npm install` or `yarn` in the project directory to install the required dependencies.
+4. Run `npm run dev` or `yarn start` to get the project started.
+5. Open http://localhost:5173 (or the address shown in your console) in your web browser to view the app.
 
-## Deploy on Vercel
+## 🧠 What New I Learnt?
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- As I wanted to learn TypeScript and NextJS, so though what's better way to learn rather then creating project!
+- How Zustand is a good alternative to Context API and how simple it is to use to manage small apllications.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 🚀 Planned Features
+
+Below are features that I am planning to add in the app.
+
+- [x] Ability to create/edit/delete/view viewed movies.
+- [x] Ability to create/edit/delete/view watchlist.
+- [x] Ability to sort and filter movies.
+- [x] Ability to discover movies (trending, upcoming, top rated movies and tv shows).
+- [x] Show toast notification on changes.
+- [x] Ability to add own rating with custom fields.
+
+## 💡 Improvements
+
+- **Recommendation**: Recommend users other movies or shows based on thier viewed list.
+- **Pin**: Allow users to pin top three movies or shows if there are too many.
