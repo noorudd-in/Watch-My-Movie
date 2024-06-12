@@ -35,6 +35,7 @@ To run the project in your local environment, follow the below steps:
 
 - As I wanted to learn TypeScript and NextJS, so though what's better way to learn rather then creating project!
 - How Zustand is a good alternative to Context API and how simple it is to use to manage small apllications.
+- How to create Pagination or 'Load More' feature for unlimited scroll.
 
 ## 🚀 Planned Features
 
@@ -42,6 +43,7 @@ Below are features that I am planning to add in the app.
 
 - [x] Ability to create/edit/delete/view viewed movies.
 - [x] Ability to create/edit/delete/view watchlist.
+- [x] Pagination (Unlimited Scroll)
 - [x] Ability to sort and filter movies.
 - [x] Ability to discover movies (trending, upcoming, top rated movies and tv shows).
 - [x] Show toast notification on changes.
@@ -51,3 +53,4 @@ Below are features that I am planning to add in the app.
 
 - **Recommendation**: Recommend users other movies or shows based on thier viewed list.
 - **Pin**: Allow users to pin top three movies or shows if there are too many.
+- **Custom Channels**: Ability to add custom movie streaming channels.
